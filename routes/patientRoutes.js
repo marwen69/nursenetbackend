@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const patientController = require('controllers/patientcontroller.js'); // Corrected import statement
+const patientController = require('../controllers/patientController'); // Corrected import statement
 
 // Create a new patient
 router.post('/patientsadd', patientController.createPatient);
@@ -11,8 +11,7 @@ router.get('/patients/:patientId', patientController.getPatientById);
 // Get a list of all patients
 router.get('/patients', patientController.getAllPatients);
 
-// Update details of a specific patient
-// router.put('/updatepatients/:patientId', patientController.updatePatient);
+
 
 // Delete a specific patient
 router.delete('/deleatpatients/:patientId', patientController.deletePatient);
