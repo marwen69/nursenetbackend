@@ -1,7 +1,7 @@
 // routes/blockRoutes.js
 const express = require('express');
 const router = express.Router();
-const blockController = require('../controllers/blockcontroller');
+const blockController = require('controllers/blockcontroller.js');
 
 // Create a new block
 router.post('/blocksadd', blockController.createBlock);
