@@ -5,6 +5,7 @@ const cors = require('cors');
 const session = require('express-session'); // Add this line to import express-session
 
 const nurseRoutes = require('./routes/nurseRoutes');
+const blockRoutes = require('./routes/blockroutes');
 const roomRoutes = require('./routes/roomRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const SurgicalOperationRoutes = require('./routes/SurgicalOperationRoutes');
