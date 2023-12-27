@@ -19,7 +19,7 @@ mongoose.set('strictQuery', false);
 mongoose.Promise = global.Promise;
 
 mongoose
-    .connect(`mongodb+srv://maroueneh5:marouene125MM@@cluster0.socs50n.mongodb.net/${databaseName}`)
+mongoose.connect(`mongodb+srv://maroueneh5:marouene@cluster0.havv1vm.mongodb.net/${databaseName}?retryWrites=true&w=majority`)
     .then(() => {
         console.log(`Connected to ${databaseName}`);
     })
