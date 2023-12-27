@@ -5,7 +5,7 @@ const cors = require('cors');
 const session = require('express-session'); // Add this line to import express-session
 
 const nurseRoutes = require('./routes/nurseRoutes.js');
-const blockRoutes = require('./routes/blockroutes.js');
+
 const roomRoutes = require('./routes/roomRoutes.js');
 const patientRoutes = require('./routes/patientRoutes.js');
 const SurgicalOperationRoutes = require('./routes/SurgicalOperationRoutes.js');
@@ -41,7 +41,7 @@ app.use(cors());
 
 // Import the nurse routes
 app.use('/api', nurseRoutes);
-app.use('/api', blockRoutes);
+
 app.use('/api', roomRoutes);
 app.use('/api', patientRoutes);
 app.use('/api', SurgicalOperationRoutes);
