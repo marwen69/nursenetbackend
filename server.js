@@ -41,9 +41,9 @@ app.use(cors());
 
 // Import the nurse routes
 app.use('/api', nurseRoutes);
-app.use('/api', blockRoutes);
+//app.use('/api', blockRoutes);
 app.use('/api', roomRoutes);
-app.use('/api', patientRoutes);
+//app.use('/api', patientRoutes);
 app.use('/api', SurgicalOperationRoutes);
 app.use('/api', medicalAdministrationRoutes);
 
