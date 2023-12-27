@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const patientController = require('../controllers/patientController'); // Corrected import statement
+const patientController = require('controllers/patientcontroller.js'); // Corrected import statement
 
 // Create a new patient
 router.post('/patientsadd', patientController.createPatient);
