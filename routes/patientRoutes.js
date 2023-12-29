@@ -12,8 +12,9 @@ router.get('/patients/:patientId', patientController.getPatientById);
 router.get('/patients', patientController.getAllPatients);
 
 
-// Delete a specific patient
-router.delete('/deleatpatients/:patientId', patientController.deletePatient);
+// Update the delete route to use matricule
+router.delete('/deleatpatients/:matricule', patientController.deletePatient);
+
 
 // get the bed for a specific patient
 router.get('/getbed/:patientId', patientController.getBed);

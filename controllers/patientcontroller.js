@@ -134,44 +134,32 @@ exports.getPatientById = async (req, res) => {
 
 
 
-// Delete a specific patient
 exports.deletePatient = async (req, res) => {
   try {
-    const patientId = req.params.patientId;
-    
-    // Find the patient to get the associated room
-    const patient = await Patient.findById(patientId);
+      const matricule = req.params.matricule;
 
-    if (!patient) {
-      return res.status(404).json({ error: 'Patient not found' });
-    }
+      // Find the patient by matricule
+      const patient = await Patient.findOne({ matricule });
 
-    const roomId = patient.room;
+      if (!patient) {
+          return res.status(404).json({ error: 'Patient not found' });
+      }
 
-    const deletedPatient = await Patient.findByIdAndRemove(patientId);
+      // Remove the patient from the database
+      const deletedPatient = await Patient.findOneAndDelete({ matricule });
 
-    if (!deletedPatient) {
-      return res.status(404).json({ error: 'Patient not found' });
-    }
+      if (!deletedPatient) {
+          return res.status(404).json({ error: 'Patient not found' });
+      }
 
-    // Remove the patient's _id from the associated room's patients array
-    const updatedRoom = await Room.findByIdAndUpdate(
-      roomId,
-      { $pull: { patients: patientId } }, // Remove the patient's _id from the patients array
-      { new: true, runValidators: true }
-    );
+      // If you have additional logic, such as updating related entities, do it here...
 
-    if (!updatedRoom) {
-      return res.status(404).json({ error: 'Room not found' });
-    }
-
-    res.status(200).json({ message: 'Patient deleted successfully', patient: deletedPatient });
+      res.status(200).json({ message: 'Patient deleted successfully', patient: deletedPatient });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
   }
 };
-
 
 //get the bed for the patient
 
