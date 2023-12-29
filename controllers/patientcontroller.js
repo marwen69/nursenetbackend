@@ -1,7 +1,7 @@
 // controllers/patientController.js
-const Patient = require('../models/patient');
+const Patient = require('../models/patient.js');
 const Room = require('../models/room');
-const Block = require('../models/block'); // Add this line to import the Block model
+const Block = require('../models/block.js'); // Add this line to import the Block model
 
 exports.createPatient = async (req, res) => {
   try {

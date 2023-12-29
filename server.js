@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session'); // Add this line to import express-session
 
+
+
 const nurseRoutes = require('./routes/nurseRoutes.js');
 const roomRoutes = require('./routes/roomRoutes.js');
+const blockRoutes = require('../routes/blockRoutes.js');
+const patientRoutes = require('../routes/patientRoutes.js');
 const SurgicalOperationRoutes = require('./routes/SurgicalOperationRoutes.js');
 const medicalAdministrationRoutes = require('./routes/medicalAdministrationRoutes.js');
 
@@ -42,9 +46,9 @@ app.use(cors(corsOptions));
 
 // Import the nurse routes
 app.use('/api', nurseRoutes);
-
+app.use('/api', blockRoutes);
+app.use('/api', patientRoutes);
 app.use('/api', roomRoutes);
-
 app.use('/api', SurgicalOperationRoutes);
 app.use('/api', medicalAdministrationRoutes);
 

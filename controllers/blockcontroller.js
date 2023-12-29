@@ -1,5 +1,5 @@
 // controllers/blockController.js
-const Block = require('../models/block');
+const Block = require('../models/block.js');
 const Room = require('../models/room');
 
 

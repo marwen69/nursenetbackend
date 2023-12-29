@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const patientController = require('../controllers/patientcontroller'); 
+const patientController = require('../controllers/patientcontroller.js'); 
 
 // Create a new patient
 router.post('/patientsadd', patientController.createPatient);
@@ -10,7 +10,6 @@ router.get('/patients/:patientId', patientController.getPatientById);
 
 // Get a list of all patients
 router.get('/patients', patientController.getAllPatients);
-
 
 
 // Delete a specific patient
