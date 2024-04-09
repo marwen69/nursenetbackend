@@ -21,6 +21,10 @@ const getAllNurses = async (req, res) => {
     }
 };
 
+
+
+
+
 // Get a specific nurse by ID
 const getNurseById = async (req, res) => {
     try {
@@ -152,6 +156,9 @@ const deleteNurse = async (req, res) => {
     }
 };
 
+
+
+
 module.exports = {
     getAllNurses,
     getNurseById,
@@ -159,4 +166,6 @@ module.exports = {
     updateNurse,
     deleteNurse,
     loginNurse,
+ 
+
 };

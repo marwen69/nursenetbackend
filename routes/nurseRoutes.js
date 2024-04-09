@@ -23,4 +23,6 @@ router.delete('/nurses/:id', nurseController.deleteNurse);
 // Login route
 router.post('/loginnurses', nurseController.loginNurse);
 
+
+
 module.exports = router;
