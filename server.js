@@ -14,9 +14,11 @@ const blockroutes = require('./routes/service.js');
 
 const patientRoutes = require('./routes/patientRoutes.js');
 
-
 const SurgicalOperationRoutes = require('./routes/SurgicalOperationRoutes.js');
 const medicalAdministrationRoutes = require('./routes/medicalAdministrationRoutes.js');
+
+const woundRoutes = require('./routes/woundRoutes.js');
+
 
 
 const databaseName = 'hospital';
@@ -56,6 +58,8 @@ app.use('/api', patientRoutes);
 app.use('/api', roomRoutes);
 app.use('/api', SurgicalOperationRoutes);
 app.use('/api', medicalAdministrationRoutes);
+app.use('/api', woundRoutes);
+
 
 // Start the server
 const port = process.env.PORT || 3000;

@@ -2,9 +2,10 @@ const  SurgicalOperation  = require('../models/surgicalOperation');
 const Patient  = require('../models/patient');
 
 // Create a new SurgicalOperation
+// Create a new SurgicalOperation
 exports.createSurgicalOperation = async (req, res) => {
   try {
-    const patientId = req.params.patientId;
+    const { preOperative, drains, postOperative, observations, patientId } = req.body;
 
     // Check if patientId is provided
     if (!patientId) {
@@ -13,14 +14,20 @@ exports.createSurgicalOperation = async (req, res) => {
 
     // Check if patient exists
     const patient = await Patient.findById(patientId);
-
     if (!patient) {
       return res.status(404).json({ error: 'Patient not found' });
     }
 
-    const surgicalOperationData = req.body;
-    surgicalOperationData.patient = patientId; // Assign patientId to the surgical operation data
-    const surgicalOperation = new SurgicalOperation(surgicalOperationData);
+    // Create a new SurgicalOperation instance
+    const surgicalOperation = new SurgicalOperation({
+      preOperative,
+      drains,
+      postOperative,
+      observations,
+      patient: patientId,
+    });
+
+    // Save the SurgicalOperation
     await surgicalOperation.save();
 
     // Assign the created SurgicalOperation to the patient

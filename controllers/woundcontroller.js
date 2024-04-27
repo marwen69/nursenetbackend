@@ -1,71 +1,136 @@
 const Wound = require('../models/wound');
+const Patient = require('../models/patient');
 
-const getAllWounds = async (req, res) => {
-    try {
-        const wounds = await Wound.find();
-        res.json(wounds);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+// Create a new Wound record
+exports.createWound = async (req, res) => {
+  try {
+    const { patientId, ficheSuivi, evaluationInitiale, apparancePlaie, peauPourtour, ecoulement, materielEnPlace, nettoyage, pansement } = req.body;
+
+    // Check if patientId is provided
+    if (!patientId) {
+        return res.status(400).json({ error: 'Invalid patient ID' });
+      }
+  
+      // Check if patient exists
+      const patient = await Patient.findById(patientId);
+      if (!patient) {
+        return res.status(404).json({ error: 'Patient not found' });
+      }
+
+    // Create a new Wound instance
+    const wound = new Wound({
+    
+      ficheSuivi,
+      evaluationInitiale,
+      apparancePlaie,
+      peauPourtour,
+      ecoulement,
+      materielEnPlace,
+      nettoyage,
+      pansement,
+      patient: patientId
+    });
+
+    // Save the Wound record
+    await wound.save();
+
+    res.status(201).json({
+      message: 'Wound record created successfully',
+      wound,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
-const getWoundById = async (req, res) => {
-    try {
-        const wound = await Wound.findById(req.params.id);
-        if (wound) {
-            res.json(wound);
-        } else {
-            res.status(404).json({ message: 'Wound not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+// Get details of a Wound record by ID
+exports.getWoundById = async (req, res) => {
+  try {
+    const woundId = req.params.woundId;
+    const wound = await Wound.findById(woundId);
+
+    if (!wound) {
+      return res.status(404).json({ error: 'Wound record not found' });
     }
+
+    res.status(200).json(wound);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
-const createWound = async (req, res) => {
+// Update details of a Wound record by ID
+exports.updateWound = async (req, res) => {
+  try {
+    const woundId = req.params.woundId;
     const woundData = req.body;
 
-    try {
-        const newWound = await Wound.create(woundData);
-        res.status(201).json(newWound);
-    } catch (error) {
-        res.status(400).json({ message: error.message });
+    const updatedWound = await Wound.findByIdAndUpdate(woundId, woundData, { new: true, runValidators: true });
+
+    if (!updatedWound) {
+      return res.status(404).json({ error: 'Wound record not found' });
     }
+
+    res.status(200).json({
+      message: 'Wound record updated successfully',
+      wound: updatedWound,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
-const updateWound = async (req, res) => {
-    try {
-        const wound = await Wound.findById(req.params.id);
-        if (wound) {
-            Object.assign(wound, req.body);
-            const updatedWound = await wound.save();
-            res.json(updatedWound);
-        } else {
-            res.status(404).json({ message: 'Wound not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+// Delete a Wound record by ID
+exports.deleteWound = async (req, res) => {
+  try {
+    const woundId = req.params.woundId;
+
+    // Check if woundId is provided
+    if (!woundId) {
+      return res.status(400).json({ error: 'Invalid Wound ID' });
     }
+
+    const deletedWound = await Wound.findByIdAndDelete(woundId);
+
+    if (!deletedWound) {
+      return res.status(404).json({ error: 'Wound record not found' });
+    }
+
+    res.status(200).json({
+      message: 'Wound record deleted successfully',
+      wound: deletedWound,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
 
-const deleteWound = async (req, res) => {
-    try {
-        const wound = await Wound.findById(req.params.id);
-        if (wound) {
-            await wound.remove();
-            res.json({ message: 'Wound deleted' });
-        } else {
-            res.status(404).json({ message: 'Wound not found' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+// Get all Wound records for a specific patient
+exports.getAllWounds = async (req, res) => {
+  try {
+    const patientId = req.params.patientId;
 
-module.exports = {
-    getAllWounds,
-    getWoundById,
-    createWound,
-    updateWound,
-    deleteWound,
+    // Check if patientId is provided
+    if (!patientId) {
+      return res.status(400).json({ error: 'Invalid patient ID' });
+    }
+
+    // Check if patient exists
+    const patient = await Patient.findById(patientId);
+
+    if (!patient) {
+      return res.status(404).json({ error: 'Patient not found' });
+    }
+
+    const wounds = await Wound.find({ patient: patientId });
+
+    res.status(200).json(wounds);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
